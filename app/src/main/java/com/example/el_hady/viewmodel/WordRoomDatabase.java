@@ -17,7 +17,7 @@ public abstract class WordRoomDatabase extends RoomDatabase {
     // to prevent having multiple instances of the database opened at the same time.
     private static volatile WordRoomDatabase INSTANCE;
 
-    static WordRoomDatabase getDatabase(final Context context) {
+    public static WordRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (WordRoomDatabase.class) {
                 if (INSTANCE == null) {
