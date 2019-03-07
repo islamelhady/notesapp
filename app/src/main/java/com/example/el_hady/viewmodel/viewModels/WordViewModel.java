@@ -23,7 +23,7 @@ public class WordViewModel extends AndroidViewModel {
         allWords = repository.getAllWords();
     }
 
-    LiveData<List<Word>> getAllWords() {
+    public LiveData<List<Word>> getAllWords() {
         return allWords;
     }
 
