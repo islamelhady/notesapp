@@ -5,21 +5,21 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
 import com.example.el_hady.viewmodel.models.Note;
-import com.example.el_hady.viewmodel.repository.WordRepository;
+import com.example.el_hady.viewmodel.repository.NoteRepository;
 
 import java.util.List;
 
 
 public class WordViewModel extends AndroidViewModel {
 
-    private WordRepository repository;
+    private NoteRepository repository;
 
     private LiveData<List<Note>> allWords;
 
     public WordViewModel (Application application) {
         super(application);
 
-        repository = new WordRepository(application);
+        repository = new NoteRepository(application);
         allWords = repository.getAllWords();
     }
 
