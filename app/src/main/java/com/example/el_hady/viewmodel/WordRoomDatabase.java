@@ -25,7 +25,8 @@ public abstract class WordRoomDatabase extends RoomDatabase {
             synchronized (WordRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            WordRoomDatabase.class, "word_database").fallbackToDestructiveMigration()
+                            WordRoomDatabase.class, "word_database")
+                            .fallbackToDestructiveMigration()
                             .addCallback(roomDatabaseCallback)
                             .build();
                 }
@@ -49,7 +50,7 @@ public abstract class WordRoomDatabase extends RoomDatabase {
             super.onOpen(db);
             // If you want to keep the data through app restarts,
             // comment out the following line.
-            new PopulateDbAsync(INSTANCE).execute();
+            //new PopulateDbAsync(INSTANCE).execute();
         }
     };
 

@@ -21,5 +21,5 @@ public interface WordDao {
     //The (DESC) keyword sorts results in descending order.
     //Similarly, (ASC) sorts the results in ascending order.
     @Query("SELECT * FROM word_table ORDER BY word ASC")
-    LiveData<List<Word>> getAllWords();
+    LiveData<List<Word>> getAlphabetizedWords();
 }

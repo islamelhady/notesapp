@@ -10,29 +10,19 @@ import android.widget.TextView;
 import com.example.el_hady.viewmodel.R;
 import com.example.el_hady.viewmodel.models.Word;
 
+import java.util.Collections;
 import java.util.List;
 
 public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordViewHolder> {
 
     private final LayoutInflater inflater;
-    private List<Word> words; // Cached copy of words
+    private List<Word> words = Collections.emptyList(); // Cached copy of words
 
    /* public WordListAdapter(LayoutInflater inflater) {
         this.inflater = inflater;
     }*/
     public WordListAdapter(Context context) {
        inflater = LayoutInflater.from(context);
-    }
-
-
-    class WordViewHolder extends RecyclerView.ViewHolder{
-
-        private final TextView wordItemView;
-
-        public WordViewHolder(@NonNull View itemView) {
-            super(itemView);
-            wordItemView = itemView.findViewById(R.id.textView);
-        }
     }
 
     @NonNull
@@ -44,26 +34,30 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
 
     @Override
     public void onBindViewHolder(@NonNull WordViewHolder holder, int position) {
-        if (words != null) {
             Word current = words.get(position);
             holder.wordItemView.setText(current.getWord());
-        } else {
-            // Covers the case of data not being ready yet.
-            holder.wordItemView.setText("No Word");
         }
 
-    }
 
     public void setWords(List<Word> words){
-        words = words;
+        this.words = words;
         notifyDataSetChanged();
     }
 
 
     @Override
     public int getItemCount() {
-        if (words != null)
-            return words.size();
-        else return 0;
+        return words.size();
+    }
+
+
+    class WordViewHolder extends RecyclerView.ViewHolder{
+
+        private final TextView wordItemView;
+
+        public WordViewHolder(@NonNull View itemView) {
+            super(itemView);
+            wordItemView = itemView.findViewById(R.id.textView);
+        }
     }
 }

@@ -27,7 +27,7 @@ public class NewWordActivity extends AppCompatActivity {
                     setResult(RESULT_CANCELED, replyIntent);
                 } else {
                     String word = editText.getText().toString();
-                    replyIntent.putExtra(EXTRA_REPLY, word);
+                    replyIntent.putExtra(EXTRA_REPLY,word);
                     setResult(RESULT_OK, replyIntent);
                 }
                 finish();
