@@ -4,19 +4,19 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
-import com.example.el_hady.viewmodel.WordRoomDatabase;
-import com.example.el_hady.viewmodel.interfaces.WordDao;
+import com.example.el_hady.viewmodel.NoteDatabase;
+import com.example.el_hady.viewmodel.interfaces.NoteDao;
 import com.example.el_hady.viewmodel.models.Note;
 
 import java.util.List;
 
 public class WordRepository {
 
-    private WordDao wordDao;
+    private NoteDao wordDao;
     private LiveData<List<Note>> allWords;
 
     public WordRepository(Application application) {
-        WordRoomDatabase db = WordRoomDatabase.getDatabase(application);
+        NoteDatabase db = NoteDatabase.getDatabase(application);
         wordDao = db.wordDao();
         allWords = wordDao.getAlphabetizedWords();
     }
@@ -32,9 +32,9 @@ public class WordRepository {
 
     private static class insertAsyncTask extends AsyncTask<Note, Void, Void> {
 
-        private WordDao mAsyncTaskDao;
+        private NoteDao mAsyncTaskDao;
 
-        insertAsyncTask(WordDao dao) {
+        insertAsyncTask(NoteDao dao) {
             mAsyncTaskDao = dao;
         }
 
