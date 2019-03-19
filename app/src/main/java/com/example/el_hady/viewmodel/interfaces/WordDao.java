@@ -5,7 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import com.example.el_hady.viewmodel.models.Word;
+import com.example.el_hady.viewmodel.models.Note;
 
 import java.util.List;
 
@@ -13,13 +13,13 @@ import java.util.List;
 public interface WordDao {
 
     @Insert
-    void insert (Word word);
+    void insert (Note word);
 
-    @Query("DELETE FROM word_table")
+    @Query("DELETE FROM Note")
     void deleteAll();
 
     //The (DESC) keyword sorts results in descending order.
     //Similarly, (ASC) sorts the results in ascending order.
-    @Query("SELECT * FROM word_table ORDER BY word ASC")
-    LiveData<List<Word>> getAlphabetizedWords();
+    @Query("SELECT * FROM Note ORDER BY word ASC")
+    LiveData<List<Note>> getAlphabetizedWords();
 }

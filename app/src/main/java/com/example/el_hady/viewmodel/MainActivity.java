@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.el_hady.viewmodel.adapter.WordListAdapter;
-import com.example.el_hady.viewmodel.models.Word;
+import com.example.el_hady.viewmodel.models.Note;
 import com.example.el_hady.viewmodel.viewModels.WordViewModel;
 
 import java.util.List;
@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
 
         mWordViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
 
-        mWordViewModel.getAllWords().observe(this, new Observer<List<Word>>() {
+        mWordViewModel.getAllWords().observe(this, new Observer<List<Note>>() {
             @Override
-            public void onChanged(@Nullable final List<Word> words) {
+            public void onChanged(@Nullable final List<Note> words) {
                 // Update the cached copy of the words in the adapter.
                 adapter.setWords(words);
             }
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Word word = new Word(data.getStringExtra(NewWordActivity.EXTRA_REPLY));
+            Note word = new Note(data.getStringExtra(NewWordActivity.EXTRA_REPLY));
             mWordViewModel.insert(word);
         } else {
             Toast.makeText(

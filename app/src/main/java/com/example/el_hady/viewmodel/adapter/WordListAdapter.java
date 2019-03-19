@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.example.el_hady.viewmodel.R;
-import com.example.el_hady.viewmodel.models.Word;
+import com.example.el_hady.viewmodel.models.Note;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
 public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordViewHolder> {
 
     private final LayoutInflater inflater;
-    private List<Word> words = Collections.emptyList(); // Cached copy of words
+    private List<Note> words = Collections.emptyList(); // Cached copy of words
 
    /* public WordListAdapter(LayoutInflater inflater) {
         this.inflater = inflater;
@@ -34,12 +34,12 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
 
     @Override
     public void onBindViewHolder(@NonNull WordViewHolder holder, int position) {
-            Word current = words.get(position);
+            Note current = words.get(position);
             holder.wordItemView.setText(current.getWord());
         }
 
 
-    public void setWords(List<Word> words){
+    public void setWords(List<Note> words){
         this.words = words;
         notifyDataSetChanged();
     }

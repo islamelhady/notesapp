@@ -4,7 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
-import com.example.el_hady.viewmodel.models.Word;
+import com.example.el_hady.viewmodel.models.Note;
 import com.example.el_hady.viewmodel.repository.WordRepository;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public class WordViewModel extends AndroidViewModel {
 
     private WordRepository repository;
 
-    private LiveData<List<Word>> allWords;
+    private LiveData<List<Note>> allWords;
 
     public WordViewModel (Application application) {
         super(application);
@@ -23,11 +23,11 @@ public class WordViewModel extends AndroidViewModel {
         allWords = repository.getAllWords();
     }
 
-    public LiveData<List<Word>> getAllWords() {
+    public LiveData<List<Note>> getAllWords() {
         return allWords;
     }
 
-    public void insert(Word word) {
+    public void insert(Note word) {
         repository.insert(word);
     }
 

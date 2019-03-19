@@ -9,9 +9,9 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 import com.example.el_hady.viewmodel.interfaces.WordDao;
-import com.example.el_hady.viewmodel.models.Word;
+import com.example.el_hady.viewmodel.models.Note;
 
-@Database(entities = {Word.class} , version = 1)
+@Database(entities = {Note.class} , version = 1)
 public abstract class WordRoomDatabase extends RoomDatabase {
 
     public abstract WordDao wordDao();
@@ -72,9 +72,9 @@ public abstract class WordRoomDatabase extends RoomDatabase {
             // Not needed if you only populate on creation.
             dao.deleteAll();
 
-            Word word = new Word("Islam");
+            Note word = new Note("Islam");
             dao.insert(word);
-            word = new Word("Elhady");
+            word = new Note("Elhady");
             dao.insert(word);
             return null;
         }
