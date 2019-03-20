@@ -14,21 +14,32 @@ public class WordViewModel extends AndroidViewModel {
 
     private NoteRepository repository;
 
-    private LiveData<List<Note>> allWords;
+    private LiveData<List<Note>> allNotes;
 
     public WordViewModel (Application application) {
         super(application);
 
         repository = new NoteRepository(application);
-        allWords = repository.getAllWords();
+        allNotes = repository.getAllNotes();
     }
 
-    public LiveData<List<Note>> getAllWords() {
-        return allWords;
+    public void insert (Note note){
+        repository.insert(note);
     }
 
-    public void insert(Note word) {
-        repository.insert(word);
+    public void update (Note note){
+        repository.update(note);
     }
 
+    public void delete (Note note) {
+        repository.delete(note);
+    }
+
+    public void deleteAllNotes(Note note){
+        repository.deleteAllNotes();
+    }
+
+    public LiveData<List<Note>> getAllNotes() {
+        return allNotes;
+    }
 }
