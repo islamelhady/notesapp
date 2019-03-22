@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class NewWordActivity extends AppCompatActivity {
+public class NewNoteActivity extends AppCompatActivity {
 
     public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
     private EditText editText;
@@ -16,7 +16,7 @@ public class NewWordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_word);
+        setContentView(R.layout.activity_new_note);
         editText = findViewById(R.id.edit_word);
 
         final Button button = findViewById(R.id.button_save);

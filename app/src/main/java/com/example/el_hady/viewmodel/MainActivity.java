@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, NewWordActivity.class);
+                Intent intent = new Intent(MainActivity.this, NewNoteActivity.class);
                 startActivityForResult(intent,1);
             }
         });*/
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Note word = new Note(data.getStringExtra(NewWordActivity.EXTRA_REPLY));
+            Note word = new Note(data.getStringExtra(NewNoteActivity.EXTRA_REPLY));
             mWordViewModel.insert(word);
         } else {
             Toast.makeText(
