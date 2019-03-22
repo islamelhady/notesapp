@@ -10,13 +10,13 @@ import com.example.el_hady.viewmodel.repository.NoteRepository;
 import java.util.List;
 
 
-public class WordViewModel extends AndroidViewModel {
+public class NoteViewModel extends AndroidViewModel {
 
     private NoteRepository repository;
 
     private LiveData<List<Note>> allNotes;
 
-    public WordViewModel (Application application) {
+    public NoteViewModel(Application application) {
         super(application);
 
         repository = new NoteRepository(application);
