@@ -19,8 +19,6 @@ public class NewNoteActivity extends AppCompatActivity {
     private EditText editTextTitle;
     private EditText editTextDescription;
     private NumberPicker numberPickerPriority;
-    private EditText editText;
-    public static final String EXTRA_REPLY = "com.example.el_hady.viewmodel.REPLY";
     public static final String EXTRA_TITLE = "com.example.el_hady.viewmodel.EXTRA_TITLE";
     public static final String EXTRA_DESCRIPTION = "com.example.el_hady.viewmodel.EXTRA_DESCRIPTION";
     public static final String EXTRA_PRIORITY = "com.example.el_hady.viewmodel.EXTRA_PRIORITY";
@@ -40,23 +38,10 @@ public class NewNoteActivity extends AppCompatActivity {
         //Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
-        setTitle("add note");
+        // getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
+        //setTitle("Add Note");
 
-        final Button button = findViewById(R.id.button_save);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Intent replyIntent = new Intent();
-                if (TextUtils.isEmpty(editText.getText())) {
-                    setResult(RESULT_CANCELED, replyIntent);
-                } else {
-                    String word = editText.getText().toString();
-                    replyIntent.putExtra(EXTRA_REPLY, word);
-                    setResult(RESULT_OK, replyIntent);
-                }
-                finish();
-            }
-        });
+
     }
 
     private void saveNote() {
@@ -64,16 +49,16 @@ public class NewNoteActivity extends AppCompatActivity {
         String description = editTextDescription.getText().toString();
         int priority = numberPickerPriority.getValue();
 
-        if (title.trim().isEmpty() || description.trim().isEmpty()){
+        if (title.trim().isEmpty() || description.trim().isEmpty()) {
             Toast.makeText(this, "PLZ insert title and description", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent data = new Intent();
-        data.putExtra(EXTRA_TITLE,title);
-        data.putExtra(EXTRA_DESCRIPTION,description);
-        data.putExtra(EXTRA_PRIORITY,priority);
+        data.putExtra(EXTRA_TITLE, title);
+        data.putExtra(EXTRA_DESCRIPTION, description);
+        data.putExtra(EXTRA_PRIORITY, priority);
 
-        setResult(RESULT_OK,data);
+        setResult(RESULT_OK, data);
         finish();
     }
 
@@ -85,15 +70,14 @@ public class NewNoteActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_note:
                 saveNote();
                 return true;
             default:
-                return super.onContextItemSelected(item);
+                return super.onOptionsItemSelected(item);
+
         }
     }
-
-
 }
