@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.example.el_hady.viewmodel.R;
 import com.example.el_hady.viewmodel.models.Note;
 
@@ -19,7 +20,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     @Override
     public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.recyclerview_item,viewGroup,false);
+                .inflate(R.layout.recyclerview_item, viewGroup, false);
         return new NoteViewHolder(view);
     }
 
@@ -36,12 +37,16 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         return notes.size();
     }
 
-    public void setNotes (List<Note> notes){
+    public void setNotes(List<Note> notes) {
         this.notes = notes;
         notifyDataSetChanged();
     }
 
-    class NoteViewHolder extends RecyclerView.ViewHolder{
+    public Note getNoteAt(int position) {
+        return notes.get(position);
+    }
+
+    class NoteViewHolder extends RecyclerView.ViewHolder {
 
         private TextView textViewTitle;
         private TextView textViewDescription;
