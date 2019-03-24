@@ -27,6 +27,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     public static final int ADD_NOTE_REQUEST_CODE = 1;
+    public static final int EDIT_NOTE_REQUEST_CODE = 2;
+
 
     private NoteViewModel noteViewModel;
 
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Swipe to delete Note
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -77,6 +80,20 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Note deleted", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
+
+        //Update note
+        adapter.setOnClickListener(new NoteAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(Note note) {
+                Intent intent = new Intent(MainActivity.this, NewNoteActivity.class);
+                intent.putExtra(NewNoteActivity.EXTRA_ID, note.getId());
+                intent.putExtra(NewNoteActivity.EXTRA_TITLE, note.getTitle());
+                intent.putExtra(NewNoteActivity.EXTRA_DESCRIPTION, note.getDescription());
+                intent.putExtra(NewNoteActivity.EXTRA_PRIORITY, note.getPriority());
+
+                startActivityForResult(intent, EDIT_NOTE_REQUEST_CODE);
+            }
+        });
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -91,6 +108,25 @@ public class MainActivity extends AppCompatActivity {
             Note note = new Note(title, description, priority);
             noteViewModel.insert(note);
             Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show();
+        } else if (requestCode == EDIT_NOTE_REQUEST_CODE && resultCode == RESULT_OK) {
+            int id = data.getIntExtra(NewNoteActivity.EXTRA_ID, -1);
+
+            if (id == -1) {
+                Toast.makeText(this, "Note can not update", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String title = data.getStringExtra(NewNoteActivity.EXTRA_TITLE);
+            String description = data.getStringExtra(NewNoteActivity.EXTRA_DESCRIPTION);
+            int priority = data.getIntExtra(NewNoteActivity.EXTRA_PRIORITY, 4);
+
+            Note note = new Note(title,description,priority);
+            note.setId(id);
+
+            noteViewModel.update(note);
+
+            Toast.makeText(this, "Note updated", Toast.LENGTH_SHORT).show();
+
         } else {
             Toast.makeText(this, "Note not saved", Toast.LENGTH_LONG).show();
         }

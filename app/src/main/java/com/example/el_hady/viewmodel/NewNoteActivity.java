@@ -19,6 +19,7 @@ public class NewNoteActivity extends AppCompatActivity {
     private EditText editTextTitle;
     private EditText editTextDescription;
     private NumberPicker numberPickerPriority;
+    public static final String EXTRA_ID = "com.example.el_hady.viewmodel.EXTRA_ID";
     public static final String EXTRA_TITLE = "com.example.el_hady.viewmodel.EXTRA_TITLE";
     public static final String EXTRA_DESCRIPTION = "com.example.el_hady.viewmodel.EXTRA_DESCRIPTION";
     public static final String EXTRA_PRIORITY = "com.example.el_hady.viewmodel.EXTRA_PRIORITY";
@@ -38,8 +39,16 @@ public class NewNoteActivity extends AppCompatActivity {
         //Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
-        // getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
-        //setTitle("Add Note");
+        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
+        Intent intent = getIntent();
+        if (intent.hasExtra(EXTRA_ID)) {
+            setTitle("Edit Note");
+            editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE));
+            editTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
+            numberPickerPriority.setValue(intent.getIntExtra(EXTRA_PRIORITY, 1));
+        } else {
+            setTitle("Add Note");
+        }
 
 
     }
@@ -57,6 +66,11 @@ public class NewNoteActivity extends AppCompatActivity {
         data.putExtra(EXTRA_TITLE, title);
         data.putExtra(EXTRA_DESCRIPTION, description);
         data.putExtra(EXTRA_PRIORITY, priority);
+
+        int id = getIntent().getIntExtra(EXTRA_ID,-1);
+        if (id != -1){
+            data.putExtra(EXTRA_ID,id);
+        }
 
         setResult(RESULT_OK, data);
         finish();
