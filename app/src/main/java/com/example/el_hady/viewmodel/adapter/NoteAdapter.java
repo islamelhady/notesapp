@@ -1,6 +1,7 @@
 package com.example.el_hady.viewmodel.adapter;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +31,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         Note currentNote = notes.get(position);
         holder.textViewTitle.setText(currentNote.getTitle());
         holder.textViewDescription.setText(currentNote.getDescription());
-        holder.textViewPriority.setText(String.valueOf(currentNote.getPriority()));
+     // holder.textViewPriority.setText(String.valueOf(currentNote.getColor()));
+        holder.cardViewColor.setBackgroundColor(currentNote.getColor());
     }
 
     @Override
@@ -51,13 +53,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
         private TextView textViewTitle;
         private TextView textViewDescription;
-        private TextView textViewPriority;
+        private CardView cardViewColor;
 
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.text_view_title);
             textViewDescription = itemView.findViewById(R.id.text_view_description);
-            textViewPriority = itemView.findViewById(R.id.text_view_priority);
+            cardViewColor = itemView.findViewById(R.id.card_view);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

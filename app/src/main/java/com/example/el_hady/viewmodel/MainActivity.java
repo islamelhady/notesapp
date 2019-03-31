@@ -8,9 +8,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private NoteViewModel noteViewModel;
-
+    private CardView cardViewColor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
 
         //Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
+
+        cardViewColor = findViewById(R.id.card_view);
+
+
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -89,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(NewNoteActivity.EXTRA_ID, note.getId());
                 intent.putExtra(NewNoteActivity.EXTRA_TITLE, note.getTitle());
                 intent.putExtra(NewNoteActivity.EXTRA_DESCRIPTION, note.getDescription());
-                intent.putExtra(NewNoteActivity.EXTRA_PRIORITY, note.getPriority());
+                intent.putExtra(NewNoteActivity.EXTRA_COLOR, note.getColor());
 
                 startActivityForResult(intent, EDIT_NOTE_REQUEST_CODE);
             }
@@ -102,10 +106,10 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == ADD_NOTE_REQUEST_CODE && resultCode == RESULT_OK) {
             String title = data.getStringExtra(NewNoteActivity.EXTRA_TITLE);
             String description = data.getStringExtra(NewNoteActivity.EXTRA_DESCRIPTION);
-            int priority = data.getIntExtra(NewNoteActivity.EXTRA_PRIORITY, 4);
+            int color = data.getIntExtra(NewNoteActivity.EXTRA_COLOR, 4);
 
             //Note note = new Note(data.getStringExtra(NewNoteActivity.EXTRA_TITLE));
-            Note note = new Note(title, description, priority);
+            Note note = new Note(title, description, color);
             noteViewModel.insert(note);
             Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show();
         } else if (requestCode == EDIT_NOTE_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -118,9 +122,9 @@ public class MainActivity extends AppCompatActivity {
 
             String title = data.getStringExtra(NewNoteActivity.EXTRA_TITLE);
             String description = data.getStringExtra(NewNoteActivity.EXTRA_DESCRIPTION);
-            int priority = data.getIntExtra(NewNoteActivity.EXTRA_PRIORITY, 4);
+            int color = data.getIntExtra(NewNoteActivity.EXTRA_COLOR, 1);
 
-            Note note = new Note(title,description,priority);
+            Note note = new Note(title,description,color);
             note.setId(id);
 
             noteViewModel.update(note);

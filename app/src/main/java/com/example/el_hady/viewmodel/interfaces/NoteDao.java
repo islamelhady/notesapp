@@ -28,6 +28,6 @@ public interface NoteDao {
 
     //The (DESC) keyword sorts results in descending order.
     //Similarly, (ASC) sorts the results in ascending order.
-    @Query("SELECT * FROM note_table ORDER BY priority ASC")
+    @Query("SELECT * FROM note_table ORDER BY color ASC")
     LiveData<List<Note>> getAllNotes();
 }

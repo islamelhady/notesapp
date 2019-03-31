@@ -10,12 +10,12 @@ public class Note {
     private int id;
     private String title;
     private String description;
-    private int priority;
+    private int color;
 
-    public Note(String title, String description, int priority) {
+    public Note(String title, String description, int color) {
         this.title = title;
         this.description = description;
-        this.priority = priority;
+        this.color = color;
     }
 
     public void setId(int id) {
@@ -34,7 +34,7 @@ public class Note {
         return description;
     }
 
-    public int getPriority() {
-        return priority;
+    public int getColor() {
+        return color;
     }
 }

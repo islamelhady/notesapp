@@ -25,14 +25,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:hint="Priority"
+        android:hint="Background"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:inputType="text" />
 
-    <NumberPicker
-        android:id="@+id/number_picker_priority"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/button_color"
+        android:layout_width="match_parent"
+        android:text="Color"
         android:layout_height="wrap_content">
-    </NumberPicker>
+    </Button>
 
 </LinearLayout>
