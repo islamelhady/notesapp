@@ -1,4 +1,4 @@
-package com.example.el_hady.viewmodel;
+package com.example.el_hady.notes;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -18,9 +18,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.el_hady.viewmodel.adapter.NoteAdapter;
-import com.example.el_hady.viewmodel.models.Note;
-import com.example.el_hady.viewmodel.viewModels.NoteViewModel;
+import com.example.el_hady.notes.adapter.NoteAdapter;
+import com.example.el_hady.notes.models.Note;
+import com.example.el_hady.notes.viewModels.NoteViewModel;
 
 import java.util.List;
 

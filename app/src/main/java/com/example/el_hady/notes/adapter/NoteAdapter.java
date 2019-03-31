@@ -1,4 +1,4 @@
-package com.example.el_hady.viewmodel.adapter;
+package com.example.el_hady.notes.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.el_hady.viewmodel.R;
-import com.example.el_hady.viewmodel.models.Note;
+import com.example.el_hady.notes.R;
+import com.example.el_hady.notes.models.Note;
 
 import java.util.ArrayList;
 import java.util.List;

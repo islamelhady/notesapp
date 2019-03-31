@@ -1,4 +1,4 @@
-package com.example.el_hady.viewmodel;
+package com.example.el_hady.notes;
 
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
@@ -8,8 +8,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
-import com.example.el_hady.viewmodel.interfaces.NoteDao;
-import com.example.el_hady.viewmodel.models.Note;
+import com.example.el_hady.notes.interfaces.NoteDao;
+import com.example.el_hady.notes.models.Note;
 
 @Database(entities = {Note.class} , version = 1)
 public abstract class NoteDatabase extends RoomDatabase {

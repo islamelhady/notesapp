@@ -1,18 +1,14 @@
-package com.example.el_hady.viewmodel;
+package com.example.el_hady.notes;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
@@ -21,15 +17,12 @@ public class NewNoteActivity extends AppCompatActivity {
 
     private EditText editTextTitle;
     private EditText editTextDescription;
-    private NumberPicker numberPickerPriority;
     private Button buttonColor;
-    private CardView cardViewBackground;
     private int defaultColor;
-    public static final String EXTRA_ID = "com.example.el_hady.viewmodel.EXTRA_ID";
+    public static final String EXTRA_ID = "com.example.el_hady.notes.EXTRA_ID";
     public static final String EXTRA_TITLE = "com.example.el_hady.viewmodel.EXTRA_TITLE";
-    public static final String EXTRA_DESCRIPTION = "com.example.el_hady.viewmodel.EXTRA_DESCRIPTION";
-    //public static final String EXTRA_PRIORITY = "com.example.el_hady.viewmodel.EXTRA_PRIORITY";
-    public static final String EXTRA_COLOR = "com.example.el_hady.viewmodel.EXTRA_COLOR";
+    public static final String EXTRA_DESCRIPTION = "com.example.el_hady.notes.EXTRA_DESCRIPTION";
+    public static final String EXTRA_COLOR = "com.example.el_hady.notes.EXTRA_COLOR";
 
 
     @Override
@@ -39,9 +32,7 @@ public class NewNoteActivity extends AppCompatActivity {
 
         editTextTitle = findViewById(R.id.edit_text_title);
         editTextDescription = findViewById(R.id.edit_text_description);
-        //numberPickerPriority = findViewById(R.id.number_picker_priority);
         buttonColor = findViewById(R.id.button_color);
-        cardViewBackground = findViewById(R.id.card_view);
         defaultColor = getResources().getColor(R.color.white);
 
         buttonColor.setOnClickListener(new View.OnClickListener() {
@@ -51,8 +42,6 @@ public class NewNoteActivity extends AppCompatActivity {
             }
         });
 
-        //numberPickerPriority.setMinValue(1);
-        //numberPickerPriority.setMaxValue(10);
 
         //Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
@@ -63,8 +52,7 @@ public class NewNoteActivity extends AppCompatActivity {
             setTitle("Edit Note");
             editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE));
             editTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
-            //numberPickerPriority.setValue(intent.getIntExtra(EXTRA_PRIORITY, 1));
-            //cardViewBackground.setBackgroundColor(intent.getIntExtra(EXTRA_COLOR,1));
+            buttonColor.setBackgroundColor(intent.getIntExtra(EXTRA_COLOR,1));
 
         } else {
             setTitle("Add Note");

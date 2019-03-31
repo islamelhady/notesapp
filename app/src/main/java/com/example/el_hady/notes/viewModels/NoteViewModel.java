@@ -1,11 +1,11 @@
-package com.example.el_hady.viewmodel.viewModels;
+package com.example.el_hady.notes.viewModels;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
-import com.example.el_hady.viewmodel.models.Note;
-import com.example.el_hady.viewmodel.repository.NoteRepository;
+import com.example.el_hady.notes.models.Note;
+import com.example.el_hady.notes.repository.NoteRepository;
 
 import java.util.List;
 

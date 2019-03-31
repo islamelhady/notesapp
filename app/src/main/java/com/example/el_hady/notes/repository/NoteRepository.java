@@ -1,12 +1,12 @@
-package com.example.el_hady.viewmodel.repository;
+package com.example.el_hady.notes.repository;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
-import com.example.el_hady.viewmodel.NoteDatabase;
-import com.example.el_hady.viewmodel.interfaces.NoteDao;
-import com.example.el_hady.viewmodel.models.Note;
+import com.example.el_hady.notes.NoteDatabase;
+import com.example.el_hady.notes.interfaces.NoteDao;
+import com.example.el_hady.notes.models.Note;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.el_hady.viewmodel;
+package com.example.el_hady.notes;
 
 import org.junit.Test;
 
