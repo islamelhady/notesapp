@@ -95,6 +95,10 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(NewNoteActivity.EXTRA_DESCRIPTION, note.getDescription());
                 intent.putExtra(NewNoteActivity.EXTRA_COLOR, note.getColor());
 
+                intent.putExtra(NewNoteActivity.EXTRA_COLOR_TITLE, note.getColor());
+                intent.putExtra(NewNoteActivity.EXTRA_COLOR_DESCRIPTION, note.getColor());
+                intent.putExtra(NewNoteActivity.EXTRA_COLOR_LINEAR, note.getColor());
+
                 startActivityForResult(intent, EDIT_NOTE_REQUEST_CODE);
             }
         });

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
@@ -19,10 +20,16 @@ public class NewNoteActivity extends AppCompatActivity {
     private EditText editTextDescription;
     private Button buttonColor;
     private int defaultColor;
+    private LinearLayout linearLayoutColor;
     public static final String EXTRA_ID = "com.example.el_hady.notes.EXTRA_ID";
     public static final String EXTRA_TITLE = "com.example.el_hady.viewmodel.EXTRA_TITLE";
     public static final String EXTRA_DESCRIPTION = "com.example.el_hady.notes.EXTRA_DESCRIPTION";
     public static final String EXTRA_COLOR = "com.example.el_hady.notes.EXTRA_COLOR";
+
+    public static final String EXTRA_COLOR_TITLE = "com.example.el_hady.notes.EXTRA_COLOR_TITLE";
+    public static final String EXTRA_COLOR_DESCRIPTION = "com.example.el_hady.notes.EXTRA_COLOR_DESCRIPTION";
+    public static final String EXTRA_COLOR_LINEAR = "com.example.el_hady.notes.EXTRA_COLOR_LINEAR";
+
 
 
     @Override
@@ -33,7 +40,8 @@ public class NewNoteActivity extends AppCompatActivity {
         editTextTitle = findViewById(R.id.edit_text_title);
         editTextDescription = findViewById(R.id.edit_text_description);
         buttonColor = findViewById(R.id.button_color);
-        defaultColor = getResources().getColor(R.color.white);
+        defaultColor = getResources().getColor(R.color.yellow);
+        linearLayoutColor = findViewById(R.id.linear_color);
 
         buttonColor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +62,11 @@ public class NewNoteActivity extends AppCompatActivity {
             editTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
             buttonColor.setBackgroundColor(intent.getIntExtra(EXTRA_COLOR,1));
 
+            editTextTitle.setBackgroundColor(intent.getIntExtra(EXTRA_COLOR_TITLE,2));
+            editTextDescription.setBackgroundColor(intent.getIntExtra(EXTRA_COLOR_DESCRIPTION,3));
+            linearLayoutColor.setBackgroundColor(intent.getIntExtra(EXTRA_COLOR_LINEAR,4));
+
+
         } else {
             setTitle("Add Note");
         }
@@ -72,6 +85,10 @@ public class NewNoteActivity extends AppCompatActivity {
             public void onOk(AmbilWarnaDialog dialog, int color) {
                 defaultColor = color;
                 buttonColor.setBackgroundColor(color);
+                editTextTitle.setBackgroundColor(color);
+                editTextDescription.setBackgroundColor(color);
+                linearLayoutColor.setBackgroundColor(color);
+
             }
         });
         ambilWarnaDialog.show();
