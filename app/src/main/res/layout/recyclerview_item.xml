@@ -25,7 +25,6 @@
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_8sdp"
-        android:fontFamily="@font/ubuntu_bold"
         android:includeFontPadding="false"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_13ssp" />
@@ -37,7 +36,6 @@
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_4sdp"
         android:layout_marginEnd="@dimen/_8sdp"
-        android:fontFamily="@font/ubuntu_regular"
         android:includeFontPadding="false"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_12ssp" />
@@ -49,7 +47,6 @@
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginBottom="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_8sdp"
-        android:fontFamily="@font/ubuntu_regular"
         android:includeFontPadding="false"
         android:textColor="@color/colorNoteSubtitleText"
         android:textSize="@dimen/_7ssp" />
