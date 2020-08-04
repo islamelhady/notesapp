@@ -1,2 +1,7 @@
-# Notes
-Simple Notes app using Room Database 
+# Notes App
+Simple Notes app using Room Database
+
+## Components Used
+* Room
+* LiveData
+* ViewModel
