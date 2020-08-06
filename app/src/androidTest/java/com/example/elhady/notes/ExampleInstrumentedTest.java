@@ -1,4 +1,4 @@
-package com.example.el_hady.notes;
+package com.example.elhady.notes;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

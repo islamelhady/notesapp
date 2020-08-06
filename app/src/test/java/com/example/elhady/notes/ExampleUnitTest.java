@@ -1,4 +1,4 @@
-package com.example.el_hady.notes;
+package com.example.elhady.notes;
 
 import org.junit.Test;
 

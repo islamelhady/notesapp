@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
@@ -26,13 +26,13 @@
             android:layout_alignParentLeft="true"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/defaultColor"
+            android:textColor="@color/colorDefaultNoteColor"
             android:text="Title"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
         <TextView
             android:id="@+id/text_view_description"
-            android:textColor="@color/defaultColor"
+            android:textColor="@color/colorDefaultNoteColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/text_view_title"
@@ -41,4 +41,4 @@
 
     </RelativeLayout>
 
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

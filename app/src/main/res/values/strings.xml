@@ -3,4 +3,9 @@
     <string name="hint_word">Word...</string>
     <string name="button_save">Save</string>
     <string name="empty_not_saved">Word not saved because it is empty.</string>
+    <string name="notes">Notes</string>
+    <string name="search_notes">Search Notes</string>
+    <string name="note_title">Note Title</string>
+    <string name="sub_title">Sub Title</string>
+    <string name="type_note_here">Type Note here</string>
 </resources>

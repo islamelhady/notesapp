@@ -1,21 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.el_hady.notes.MainActivity">
+    android:background="@color/colorPrimary"
+    tools:context="com.example.elhady.notes.MainActivity">
 
-
-    <include layout="@layout/content_main" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/button_add_note"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/text_my_notes"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:backgroundTint="@color/colorPrimary"
-        android:src="@drawable/ic_add" />
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:fontFamily="@font/ubuntu_bold"
+        android:includeFontPadding="false"
+        android:text="@string/notes"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/_20ssp"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</android.support.design.widget.CoordinatorLayout>
+    <LinearLayout
+        android:id="@+id/layout_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:background="@color/colorSearchBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@id/text_my_notes">
+
+        <ImageView
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:contentDescription="@string/app_name"
+            />
+
+        <EditText
+            android:id="@+id/input_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginLeft="@dimen/_12sdp"
+            android:background="@null"
+            android:fontFamily="@font/ubuntu_regular"
+            android:hint="@string/search_notes"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:includeFontPadding="false"
+            android:inputType="text"
+            android:textColorHint="@color/colorSearchIcon"
+            android:textColor="@color/colorWhite" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/notes_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_2sdp"
+        android:clipToPadding="false"
+        android:paddingStart="0dp"
+        android:paddingEnd="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_12sdp"
+        app:layout_constraintBottom_toTopOf="@+id/layout_quick_action"
+        app:layout_constraintTop_toBottomOf="@id/layout_search"
+        android:paddingLeft="0dp"
+        android:paddingRight="@dimen/_12sdp" />
+
+    <LinearLayout
+        android:id="@+id/layout_quick_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorQuickActionsBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/_15sdp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/image_add_note"
+            android:layout_width="@dimen/_23sdp"
+            android:layout_height="@dimen/_23sdp"
+            android:src="@drawable/ic_add"
+            app:tint="@color/colorIcons"
+            android:contentDescription="@string/app_name" />
+
+        <ImageView
+            android:id="@+id/image_add_image"
+            android:layout_width="@dimen/_23sdp"
+            android:layout_height="@dimen/_23sdp"
+            android:src="@drawable/ic_image"
+            app:tint="@color/colorIcons"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:contentDescription="@string/app_name"
+             />
+
+        <ImageView
+            android:id="@+id/image_add_imag"
+            android:layout_width="@dimen/_23sdp"
+            android:layout_height="@dimen/_23sdp"
+            android:src="@drawable/ic_link"
+            app:tint="@color/colorIcons"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:contentDescription="@string/app_name"
+             />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/image_add_main_note"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:background="@drawable/background_add_button"
+        android:contentDescription="@string/app_name"
+        android:padding="@dimen/_5sdp"
+        android:src="@drawable/ic_add_note"
+        app:tint="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@id/layout_quick_action"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/layout_quick_action"
+        android:layout_marginRight="@dimen/_30sdp"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
