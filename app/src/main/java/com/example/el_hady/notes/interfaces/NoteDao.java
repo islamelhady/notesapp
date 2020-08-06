@@ -2,6 +2,7 @@ package com.example.el_hady.notes.interfaces;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
@@ -28,6 +29,6 @@ public interface NoteDao {
 
     //The (DESC) keyword sorts results in descending order.
     //Similarly, (ASC) sorts the results in ascending order.
-    @Query("SELECT * FROM note_table ORDER BY color ASC")
+    @Query("SELECT * FROM note_table ORDER BY id DESC")
     LiveData<List<Note>> getAllNotes();
 }

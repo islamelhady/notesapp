@@ -1,6 +1,8 @@
 package com.example.el_hady.notes;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,7 +14,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import yuku.ambilwarna.AmbilWarnaDialog;
+
+import java.util.ArrayList;
+
+import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class NewNoteActivity extends AppCompatActivity {
 
@@ -31,7 +36,6 @@ public class NewNoteActivity extends AppCompatActivity {
     public static final String EXTRA_COLOR_LINEAR = "com.example.el_hady.notes.EXTRA_COLOR_LINEAR";
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +51,7 @@ public class NewNoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openColorPicker();
+
             }
         });
 
@@ -60,11 +65,11 @@ public class NewNoteActivity extends AppCompatActivity {
             setTitle("Edit Note");
             editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE));
             editTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
-            buttonColor.setBackgroundColor(intent.getIntExtra(EXTRA_COLOR,1));
+            buttonColor.setBackgroundColor(intent.getIntExtra(EXTRA_COLOR, 1));
 
-            editTextTitle.setBackgroundColor(intent.getIntExtra(EXTRA_COLOR_TITLE,2));
-            editTextDescription.setBackgroundColor(intent.getIntExtra(EXTRA_COLOR_DESCRIPTION,3));
-            linearLayoutColor.setBackgroundColor(intent.getIntExtra(EXTRA_COLOR_LINEAR,4));
+            editTextTitle.setBackgroundColor(intent.getIntExtra(EXTRA_COLOR_TITLE, 2));
+            editTextDescription.setBackgroundColor(intent.getIntExtra(EXTRA_COLOR_DESCRIPTION, 3));
+            linearLayoutColor.setBackgroundColor(intent.getIntExtra(EXTRA_COLOR_LINEAR, 4));
 
 
         } else {
@@ -75,23 +80,36 @@ public class NewNoteActivity extends AppCompatActivity {
     }
 
     private void openColorPicker() {
-        AmbilWarnaDialog ambilWarnaDialog = new AmbilWarnaDialog(this, defaultColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
-            @Override
-            public void onCancel(AmbilWarnaDialog dialog) {
+        ColorPicker colorPicker = new ColorPicker(this);
+        ArrayList<String> colors = new ArrayList<>();
+        colors.add("#ffeead");
+        colors.add("#93cfb3");
+        colors.add("#fd7a7a");
+        colors.add("#faca5f");
+        colors.add("#1ba798");
+        colors.add("#6aa9ae");
+        colors.add("#ffbf27");
+        colors.add("#d93947");
+        colors.add("#ffbf27");
+        colors.add("#d93347");
+        colorPicker.setColors(colors)
+                .setColumns(5)
+                .setRoundColorButton(true)
+                .setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
+                    @Override
+                    public void onChooseColor(int position, int color) {
+                        defaultColor = color;
+                        buttonColor.setBackgroundColor(color);
+                        editTextTitle.setBackgroundColor(color);
+                        editTextDescription.setBackgroundColor(color);
+                        linearLayoutColor.setBackgroundColor(color);
+                    }
 
-            }
+                    @Override
+                    public void onCancel() {
 
-            @Override
-            public void onOk(AmbilWarnaDialog dialog, int color) {
-                defaultColor = color;
-                buttonColor.setBackgroundColor(color);
-                editTextTitle.setBackgroundColor(color);
-                editTextDescription.setBackgroundColor(color);
-                linearLayoutColor.setBackgroundColor(color);
-
-            }
-        });
-        ambilWarnaDialog.show();
+                    }
+                }).show();
     }
 
 
@@ -110,9 +128,9 @@ public class NewNoteActivity extends AppCompatActivity {
         data.putExtra(EXTRA_DESCRIPTION, description);
         data.putExtra(EXTRA_COLOR, color);
 
-        int id = getIntent().getIntExtra(EXTRA_ID,-1);
-        if (id != -1){
-            data.putExtra(EXTRA_ID,id);
+        int id = getIntent().getIntExtra(EXTRA_ID, -1);
+        if (id != -1) {
+            data.putExtra(EXTRA_ID, id);
         }
 
         setResult(RESULT_OK, data);

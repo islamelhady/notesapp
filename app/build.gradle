@@ -39,4 +39,7 @@ dependencies {
     // Room component
     implementation "android.arch.persistence.room:runtime:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+
+    //Color Picker
+    implementation 'petrov.kristiyan:colorpicker-library:1.1.4'
 }
