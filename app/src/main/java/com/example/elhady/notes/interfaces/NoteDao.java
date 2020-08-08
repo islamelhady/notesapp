@@ -1,5 +1,6 @@
 package com.example.elhady.notes.interfaces;
 
+import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -9,6 +10,7 @@ import com.example.elhady.notes.models.Note;
 
 import java.util.List;
 
+@Dao
 public interface NoteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertNote (Note note);

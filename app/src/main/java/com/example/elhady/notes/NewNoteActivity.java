@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.el_hady.notes.R;
+import com.example.elhady.notes.R;
 import com.example.elhady.notes.database.NoteDatabase;
 import com.example.elhady.notes.models.Note;
 

@@ -1,13 +1,20 @@
 package com.example.elhady.notes;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.el_hady.notes.R;
+import com.example.elhady.notes.R;
+import com.example.elhady.notes.database.NoteDatabase;
+import com.example.elhady.notes.models.Note;
+
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -23,9 +30,28 @@ public class MainActivity extends AppCompatActivity {
         imageViewAddNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(getApplicationContext(), NewNoteActivity.class),ADD_NOTE_REQUEST_CODE);
+                startActivityForResult(new Intent(getApplicationContext(), NewNoteActivity.class), ADD_NOTE_REQUEST_CODE);
             }
         });
+        getNotes();
+    }
 
+    private void getNotes() {
+
+        @SuppressLint("StaticFieldLeak")
+        class GetNotesTask extends AsyncTask<Void, Void, List<Note>> {
+
+            @Override
+            protected List<Note> doInBackground(Void... voids) {
+                return NoteDatabase.getDatabase(getApplicationContext()).noteDao().getAllNotes();
+            }
+
+            @Override
+            protected void onPostExecute(List<Note> notes) {
+                super.onPostExecute(notes);
+                Log.d("my notes",notes.toString());
+            }
+        }
+        new GetNotesTask().execute();
     }
 }
