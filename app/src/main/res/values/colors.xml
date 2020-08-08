@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#292929</color>
     <color name="colorPrimaryDark">#292929</color>
-    <color name="colorAccent">#FDBE3B</color>
+    <color name="colorAccent">#F57F17</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorSearchIcon">#DBDBDB</color>
     <color name="colorTextHint">#7B7B7B</color>
@@ -11,28 +11,14 @@
     <color name="colorTextSubtitle">#CECECE</color>
     <color name="colorDefaultNoteColor">#333333</color>
     <color name="colorNoteSubtitleText">#FAFAFA</color>
-    <color name="colorMiscellBackground">#1F1F1F</color>
-    <color name="colorNoteColor2">#FDBE38</color>
-    <color name="colorNoteColor3">#FF4842</color>
+    <color name="colorPickBackground">#1F1F1F</color>
+    <color name="colorNoteColor2">#FF6F00</color>
+    <color name="colorNoteColor3">#F50057</color>
     <color name="colorNoteColor4">#3A52FC</color>
-    <color name="colorNoteColor5">#000000</color>
+    <color name="colorNoteColor5">#827717</color>
+    <color name="colorNoteColor6">#00695C</color>
+    <color name="colorNoteColor7">#000000</color>
     <color name="colorDelete">#FF4842</color>
     <color name="colorSearchBackground">#333333</color>
 
-
-
-    <!--color palete-->
-    <color name="white">#dde6ec</color>
-    <color name="blue">#7ec4ed</color>
-    <color name="yellow">#d0fc7d</color>
-    <color name="pink">#ed579a</color>
-    <color name="green">#2aed76</color>
-
-    <array name="demo_colors">
-        <item>@color/white</item>
-        <item>@color/blue</item>
-        <item>@color/yellow</item>
-        <item>@color/pink</item>
-        <item>@color/green</item>
-    </array>
 </resources>

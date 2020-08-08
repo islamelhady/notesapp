@@ -110,7 +110,7 @@ public class NewNoteActivity extends AppCompatActivity {
     private void initNoteBackground(){
         final LinearLayout layoutColor = findViewById(R.id.layout_color);
         final BottomSheetBehavior<LinearLayout> bottomSheetBehavior = BottomSheetBehavior.from(layoutColor);
-        layoutColor.findViewById(R.id.text_miscellaneous).setOnClickListener(new View.OnClickListener() {
+        layoutColor.findViewById(R.id.text_color_picker).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED){
@@ -126,6 +126,8 @@ public class NewNoteActivity extends AppCompatActivity {
         final ImageView imageColor3 = layoutColor.findViewById(R.id.image_color3);
         final ImageView imageColor4 = layoutColor.findViewById(R.id.image_color4);
         final ImageView imageColor5 = layoutColor.findViewById(R.id.image_color5);
+        final ImageView imageColor6 = layoutColor.findViewById(R.id.image_color6);
+        final ImageView imageColor7 = layoutColor.findViewById(R.id.image_color7);
 
         layoutColor.findViewById(R.id.image_color1).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +138,8 @@ public class NewNoteActivity extends AppCompatActivity {
                 imageColor3.setImageResource(0);
                 imageColor4.setImageResource(0);
                 imageColor5.setImageResource(0);
+                imageColor6.setImageResource(0);
+                imageColor7.setImageResource(0);
                 setSubtitleIndicatorColor();
             }
         });
@@ -143,12 +147,14 @@ public class NewNoteActivity extends AppCompatActivity {
         layoutColor.findViewById(R.id.image_color2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectNoteColor = "#FDBE38";
+                selectNoteColor = "#FF6F00";
                 imageColor1.setImageResource(0);
                 imageColor2.setImageResource(R.drawable.ic_check);
                 imageColor3.setImageResource(0);
                 imageColor4.setImageResource(0);
                 imageColor5.setImageResource(0);
+                imageColor6.setImageResource(0);
+                imageColor7.setImageResource(0);
                 setSubtitleIndicatorColor();
             }
         });
@@ -156,12 +162,14 @@ public class NewNoteActivity extends AppCompatActivity {
         layoutColor.findViewById(R.id.image_color3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectNoteColor = "#FF4842";
+                selectNoteColor = "#F50057";
                 imageColor1.setImageResource(0);
                 imageColor2.setImageResource(0);
                 imageColor3.setImageResource(R.drawable.ic_check);
                 imageColor4.setImageResource(0);
                 imageColor5.setImageResource(0);
+                imageColor6.setImageResource(0);
+                imageColor7.setImageResource(0);
                 setSubtitleIndicatorColor();
             }
         });
@@ -175,6 +183,8 @@ public class NewNoteActivity extends AppCompatActivity {
                 imageColor3.setImageResource(0);
                 imageColor4.setImageResource(R.drawable.ic_check);
                 imageColor5.setImageResource(0);
+                imageColor6.setImageResource(0);
+                imageColor7.setImageResource(0);
                 setSubtitleIndicatorColor();
             }
         });
@@ -182,12 +192,44 @@ public class NewNoteActivity extends AppCompatActivity {
         layoutColor.findViewById(R.id.image_color5).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectNoteColor = "#000000";
+                selectNoteColor = "#827717";
                 imageColor1.setImageResource(0);
                 imageColor2.setImageResource(0);
                 imageColor3.setImageResource(0);
                 imageColor4.setImageResource(0);
                 imageColor5.setImageResource(R.drawable.ic_check);
+                imageColor6.setImageResource(0);
+                imageColor7.setImageResource(0);
+                setSubtitleIndicatorColor();
+            }
+        });
+
+        layoutColor.findViewById(R.id.image_color6).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectNoteColor = "#00695C";
+                imageColor1.setImageResource(0);
+                imageColor2.setImageResource(0);
+                imageColor3.setImageResource(0);
+                imageColor4.setImageResource(0);
+                imageColor5.setImageResource(0);
+                imageColor6.setImageResource(R.drawable.ic_check);
+                imageColor7.setImageResource(0);
+                setSubtitleIndicatorColor();
+            }
+        });
+
+        layoutColor.findViewById(R.id.image_color7).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectNoteColor = "#000000";
+                imageColor1.setImageResource(0);
+                imageColor2.setImageResource(0);
+                imageColor3.setImageResource(0);
+                imageColor4.setImageResource(0);
+                imageColor5.setImageResource(0);
+                imageColor6.setImageResource(0);
+                imageColor7.setImageResource(R.drawable.ic_check);
                 setSubtitleIndicatorColor();
             }
         });

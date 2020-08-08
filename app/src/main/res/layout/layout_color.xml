@@ -10,13 +10,13 @@
     app:layout_behavior="@string/bottom_sheet_behavior">
 
     <TextView
-        android:id="@+id/text_miscellaneous"
+        android:id="@+id/text_color_picker"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
         android:fontFamily="@font/ubuntu_medium"
         android:gravity="center"
         android:includeFontPadding="false"
-        android:text="@string/color_picker"
+        android:text="@string/pick_color"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_13ssp" />
 
@@ -129,14 +129,47 @@
                 app:tint="@color/colorWhite" />
         </FrameLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/ubuntu_medium"
-            android:includeFontPadding="false"
-            android:text="@string/pick_color"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_13ssp"/>
+            android:layout_weight="1">
+
+            <View
+                android:id="@+id/view_color6"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/background_note_color_6" />
+
+            <ImageView
+                android:id="@+id/image_color6"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:contentDescription="@string/app_name"
+                android:padding="@dimen/_10sdp"
+                app:tint="@color/colorWhite" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <View
+                android:id="@+id/view_color7"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/background_note_color_7" />
+
+            <ImageView
+                android:id="@+id/image_color7"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:contentDescription="@string/app_name"
+                android:padding="@dimen/_10sdp"
+                app:tint="@color/colorWhite" />
+        </FrameLayout>
+
+
 
     </LinearLayout>
 
