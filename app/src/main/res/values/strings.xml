@@ -10,4 +10,5 @@
     <string name="type_note_here">Type Note here</string>
     <string name="color_picker">Color</string>
     <string name="pick_color">Pick Color</string>
+    <string name="add_image">Add Image</string>
 </resources>

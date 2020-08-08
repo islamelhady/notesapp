@@ -113,6 +113,19 @@
                 app:layout_constraintTop_toTopOf="@id/input_notes_subtitle"
                 tools:ignore="RtlCompat" />
 
+            <ImageView
+                android:id="@+id/image_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_launcher_background"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/input_notes_subtitle" />
+
             <EditText
                 android:id="@+id/input_notes"
                 android:layout_width="match_parent"
@@ -134,7 +147,7 @@
                 android:textColorHint="@color/colorTextHint"
                 android:textSize="@dimen/_13ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/input_notes_subtitle"/>
+                app:layout_constraintTop_toBottomOf="@id/image_note"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
