@@ -1,8 +1,12 @@
 package com.example.elhady.notes.adapter;
 
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,6 +49,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     static class NoteViewHolder extends RecyclerView.ViewHolder {
 
         TextView textTitle, textSubtitle, textDataTime;
+        LinearLayout layoutNote;
 
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -52,6 +57,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             textTitle = itemView.findViewById(R.id.text_title);
             textSubtitle = itemView.findViewById(R.id.text_subtitle);
             textDataTime = itemView.findViewById(R.id.text_data_time);
+            layoutNote  = itemView.findViewById(R.id.layout_note);
         }
 
         void setNote(Note note) {
@@ -62,6 +68,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                 textSubtitle.setText(note.getSubtitle());
             }
             textDataTime.setText(note.getDataTime());
+
+            GradientDrawable gradientDrawable = (GradientDrawable) layoutNote.getBackground();
+            if (note.getColor() != null){
+                gradientDrawable.setColor(Color.parseColor(note.getColor()));
+            }else {
+                gradientDrawable.setColor(Color.parseColor("#333333"));
+            }
         }
     }
 }

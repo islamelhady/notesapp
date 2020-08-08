@@ -71,6 +71,7 @@
                 android:id="@+id/text_data_time"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:paddingTop="@dimen/_4sdp"
                 android:fontFamily="@font/ubuntu_regular"
                 android:includeFontPadding="false"
                 android:textColor="@color/colorIcons"
@@ -138,5 +139,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <include layout="@layout/layout_color"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
