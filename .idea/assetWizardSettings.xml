@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialiconsround/arrow_back_ios/round_arrow_back_ios_24.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/wb_sunny/baseline_wb_sunny_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -29,7 +29,7 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="d5d5d5" />
-                            <entry key="outputName" value="ic_back" />
+                            <entry key="outputName" value="ic_day" />
                             <entry key="sourceFile" value="C:\Users\el-hady\Desktop\notesapp" />
                           </map>
                         </option>

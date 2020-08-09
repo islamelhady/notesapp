@@ -18,7 +18,7 @@
         android:gravity="center"
         android:includeFontPadding="false"
         android:text="@string/pick_color"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorTextHint"
         android:textSize="@dimen/_13ssp" />
 
     <LinearLayout
@@ -186,16 +186,16 @@
             android:layout_height="@dimen/_22sdp"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_image"
-            app:tint="@color/colorIcons" />
+            app:tint="@color/colorTextHint" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
-            android:fontFamily="@font/ubuntu_regular"
+            android:fontFamily="@font/ubuntu_medium"
             android:includeFontPadding="false"
             android:text="@string/add_image"
-            android:textColor="@color/colorIcons"
+            android:textColor="@color/colorTextHint"
             android:textSize="@dimen/_12ssp"/>
 
     </LinearLayout>

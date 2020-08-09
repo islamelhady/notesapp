@@ -11,5 +11,5 @@
     <string name="color_picker">Color</string>
     <string name="pick_color">Pick Color</string>
     <string name="add_image">Add Image</string>
-    <string name="text">Night Mode</string>
+    <string name="text">Light Mode</string>
 </resources>

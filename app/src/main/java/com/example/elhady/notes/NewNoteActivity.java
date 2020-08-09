@@ -5,6 +5,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -42,6 +43,7 @@ public class NewNoteActivity extends AppCompatActivity {
     private String selectNoteColor;
     private ImageView imageNote;
     private View viewSubtitleIndicator;
+    private String selectImagePath;
 
     public static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
     public static final int REQUEST_CODE_SELECT_IMAGE = 2;
@@ -80,6 +82,7 @@ public class NewNoteActivity extends AppCompatActivity {
 
         // Default Note Color
         selectNoteColor = "#333333";
+        selectImagePath = "";
 
         initNoteBackground();
         setSubtitleIndicatorColor();
@@ -102,6 +105,7 @@ public class NewNoteActivity extends AppCompatActivity {
         note.setNoteText(inputNoteText.getText().toString());
         note.setDataTime(textDataTime.getText().toString());
         note.setColor(selectNoteColor);
+        note.setImagePath(selectImagePath);
 
         @SuppressLint("StaticFieldLeak")
         class SaveNoteTask extends AsyncTask<Void, Void, Void> {
@@ -301,11 +305,28 @@ public class NewNoteActivity extends AppCompatActivity {
                         Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                         imageNote.setImageBitmap(bitmap);
                         imageNote.setVisibility(View.VISIBLE);
-                    } catch (Exception e) {
-                        Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        selectImagePath = getPathFromUri(selectedImageUri);
+                    } catch (Exception exception) {
+                        Toast.makeText(this, exception.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         }
+    }
+
+    private String getPathFromUri(Uri contentUri) {
+        String filePath;
+        Cursor cursor = getContentResolver()
+                .query(contentUri, null, null, null, null);
+        if (cursor == null){
+            filePath = contentUri.getPath();
+        }else {
+            cursor.moveToFirst();
+            int index = cursor.getColumnIndex("_data");
+            filePath = cursor.getString(index);
+            cursor.close();
+        }
+        return filePath;
     }
 }

@@ -18,9 +18,24 @@
         android:fontFamily="@font/ubuntu_bold"
         android:includeFontPadding="false"
         android:text="@string/notes"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorTextHint"
         android:textSize="@dimen/_20ssp"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatToggleButton
+        android:id="@+id/switchCompat"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:background="@drawable/button"
+        android:checked="false"
+        android:textOff=""
+        android:textOn=""
+        app:layout_constraintBottom_toBottomOf="@id/text_my_notes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_my_notes"
+        app:showText="false" />
 
     <LinearLayout
         android:id="@+id/layout_search"
@@ -29,7 +44,7 @@
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginEnd="@dimen/_8sdp"
-        android:background="@color/colorSearchBackground"
+        android:background="@drawable/background_search"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="@dimen/_10sdp"
@@ -39,8 +54,9 @@
         <ImageView
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
-            android:contentDescription="@string/app_name"
-            />
+            android:src="@drawable/ic_search"
+            app:tint="@color/colorTextHint"
+            android:contentDescription="@string/app_name" />
 
         <EditText
             android:id="@+id/input_search"
@@ -55,8 +71,8 @@
             android:importantForAutofill="no"
             android:includeFontPadding="false"
             android:inputType="text"
-            android:textColorHint="@color/colorSearchIcon"
-            android:textColor="@color/colorWhite" />
+            android:textColorHint="@color/colorIcons"
+            android:textColor="@color/colorSearchIcon" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -78,7 +94,7 @@
         android:id="@+id/layout_quick_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorQuickActionsBackground"
+        android:background="@color/colorPrimary"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="@dimen/_15sdp"
@@ -88,9 +104,9 @@
             android:id="@+id/image_add_note"
             android:layout_width="@dimen/_23sdp"
             android:layout_height="@dimen/_23sdp"
+            android:contentDescription="@string/app_name"
             android:src="@drawable/ic_add"
-            app:tint="@color/colorIcons"
-            android:contentDescription="@string/app_name" />
+            app:tint="@color/colorIcons" />
 
         <ImageView
             android:id="@+id/image_add_image"
