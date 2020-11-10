@@ -25,8 +25,8 @@
 
     <androidx.appcompat.widget.AppCompatToggleButton
         android:id="@+id/switchCompat"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
         android:layout_marginEnd="@dimen/_12sdp"
         android:background="@drawable/button"
         android:checked="false"

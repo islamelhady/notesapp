@@ -10,6 +10,7 @@
     <color name="colorIcons">#A4A4A4</color>
     <color name="colorTextSubtitle">#CECECE</color>
     <color name="colorDefaultNoteColor">#333333</color>
+    <color name="LayoutURLColor">#333333</color>
     <color name="colorNoteSubtitleText">#FAFAFA</color>
     <color name="colorPickBackground">#1F1F1F</color>
     <color name="colorNoteColor2">#FF6F00</color>

@@ -12,4 +12,8 @@
     <string name="pick_color">Pick Color</string>
     <string name="add_image">Add Image</string>
     <string name="text">Night Mode</string>
+    <string name="add_url">Add URL</string>
+    <string name="enter_url">Enter URL</string>
+    <string name="add">Add</string>
+    <string name="cancel_dialog">Cancel</string>
 </resources>

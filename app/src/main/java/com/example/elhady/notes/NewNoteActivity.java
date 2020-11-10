@@ -9,12 +9,16 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +27,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -42,9 +47,12 @@ public class NewNoteActivity extends AppCompatActivity {
     private TextView textDataTime;
     private String selectNoteColor;
     private ImageView imageNote;
+    private TextView textWebURL;
+    private LinearLayout layoutWebURL;
     private View viewSubtitleIndicator;
     private String selectImagePath;
 
+    private AlertDialog dialogAddURL;
     public static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
     public static final int REQUEST_CODE_SELECT_IMAGE = 2;
 
@@ -67,6 +75,8 @@ public class NewNoteActivity extends AppCompatActivity {
         textDataTime = findViewById(R.id.text_data_time);
         viewSubtitleIndicator = findViewById(R.id.view_subtitle_indicator);
         imageNote = findViewById(R.id.image_note);
+        textWebURL = findViewById(R.id.text_web_URL);
+        layoutWebURL = findViewById(R.id.layout_web_URL);
 
         // ex: Sunday,14 May 1995 22:34 PM
         textDataTime.setText(new SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm a", Locale.getDefault())
@@ -106,6 +116,13 @@ public class NewNoteActivity extends AppCompatActivity {
         note.setDataTime(textDataTime.getText().toString());
         note.setColor(selectNoteColor);
         note.setImagePath(selectImagePath);
+
+        // We have check if "layoutWebURL" is visible or not
+        // if it is visible it means Web URL is added since we have made it
+        // visible only while adding Web URL from add URL dialog.
+        if (layoutWebURL.getVisibility() == View.VISIBLE) {
+            note.setWebLink(textWebURL.getText().toString());
+        }
 
         @SuppressLint("StaticFieldLeak")
         class SaveNoteTask extends AsyncTask<Void, Void, Void> {
@@ -267,6 +284,14 @@ public class NewNoteActivity extends AppCompatActivity {
             }
         });
 
+        layoutColor.findViewById(R.id.layoutAddUrl).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                showAddURLDialog();
+            }
+        });
+
     }
 
     private void setSubtitleIndicatorColor() {
@@ -319,14 +344,56 @@ public class NewNoteActivity extends AppCompatActivity {
         String filePath;
         Cursor cursor = getContentResolver()
                 .query(contentUri, null, null, null, null);
-        if (cursor == null){
+        if (cursor == null) {
             filePath = contentUri.getPath();
-        }else {
+        } else {
             cursor.moveToFirst();
             int index = cursor.getColumnIndex("_data");
             filePath = cursor.getString(index);
             cursor.close();
         }
         return filePath;
+    }
+
+    private void showAddURLDialog() {
+        if (dialogAddURL == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(NewNoteActivity.this);
+            View view = LayoutInflater.from(this).inflate(
+                    R.layout.layout_add_url,
+                    (ViewGroup) findViewById(R.id.layout_add_url_container));
+
+            builder.setView(view);
+
+            dialogAddURL = builder.create();
+            if (dialogAddURL.getWindow() != null) {
+                dialogAddURL.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            }
+
+            final EditText inputURL = view.findViewById(R.id.input_URL);
+            inputURL.requestFocus();
+
+            view.findViewById(R.id.text_add).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (inputURL.getText().toString().trim().isEmpty()) {
+                        Toast.makeText(NewNoteActivity.this, "Enter URL", Toast.LENGTH_SHORT).show();
+                    } else if (!Patterns.WEB_URL.matcher(inputURL.getText().toString()).matches()) {
+                        Toast.makeText(NewNoteActivity.this, "Enter valid URL", Toast.LENGTH_SHORT).show();
+                    } else {
+                        textWebURL.setText(inputURL.getText().toString());
+                        layoutWebURL.setVisibility(View.VISIBLE);
+                        dialogAddURL.dismiss();
+                    }
+                }
+            });
+
+            view.findViewById(R.id.text_cancel).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialogAddURL.dismiss();
+                }
+            });
+        }
+        dialogAddURL.show();
     }
 }
