@@ -100,7 +100,10 @@ public class MainActivity extends AppCompatActivity implements NotesListeners {
         // This getNotes() method is called from onCreate() method of an activity. it means
         // the application is just started and we need to display all notes from the database
         // and that's why we are passing REQUEST_CODE_SHOW_NOTES to that method.
-        getNotes(REQUEST_CODE_SHOW_NOTE);
+
+        // Here, request code is REQUEST_CODE_SHOW_NOTE, it means we are displaying all notes from the database
+        // and therefore as a parameter isNoteDeleted we are passing 'false'
+        getNotes(REQUEST_CODE_SHOW_NOTE, false);
     }
 
 
@@ -113,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements NotesListeners {
         startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE);
     }
 
-    private void getNotes(final int requestCode) {
+    private void getNotes(final int requestCode, final boolean isNoteDeleted) {
 
         @SuppressLint("StaticFieldLeak")
         class GetNotesTask extends AsyncTask<Void, Void, List<Note>> {
@@ -137,10 +140,21 @@ public class MainActivity extends AppCompatActivity implements NotesListeners {
                     notesRecyclerView.smoothScrollToPosition(0);
                     // Here, request code is REQUEST_CODE_UPDATE_NOTE, so we are removing note from the clicked position
                     // and adding the latest updated note from same position from the database and notify the adapter for item changed at the position
+
+
+                    // if request code is REQUEST_CODE_UPDATE_NOTE, First, we remove note from list.
+                    // Then we checked whether the note is deleted or not.
+                    // if the note is deleted then notifying adapter about item removed.
+                    // if the note is not deleted then it must be updated that's why we are adding a newly updated
+                    // note to that same position where we removed and notifying adapter about item changed.
                 }else if (requestCode == REQUEST_CODE_UPDATE_NOTE){
                     noteList.remove(noteClickedPosition);
-                    noteList.add(noteClickedPosition, notes.get(noteClickedPosition));
-                    adapter.notifyItemChanged(noteClickedPosition);
+                    if (isNoteDeleted){
+                        adapter.notifyItemRemoved(noteClickedPosition);
+                    }else {
+                        noteList.add(noteClickedPosition, notes.get(noteClickedPosition));
+                        adapter.notifyItemChanged(noteClickedPosition);
+                    }
                 }
             }
         }
@@ -154,14 +168,21 @@ public class MainActivity extends AppCompatActivity implements NotesListeners {
             // This getNotes() method is called from the onActivityResult() method of activity and we checked the
             // current request code is for add note and the result is RESULT_OK. it means a new note is added from CreateNote
             // activity and its result is sent back to this activity that's why we are passing REQUEST_CODE_ADD_NOTE to that method.
-            getNotes(REQUEST_CODE_ADD_NOTE);
+
+            // Here, request code is REQUEST_CODE_ADD_NOTE, it means we have added a new note to the database
+            // and therefore as a parameter isNoteDeleted we are passing 'false'
+            getNotes(REQUEST_CODE_ADD_NOTE, false);
         }else if (requestCode == REQUEST_CODE_UPDATE_NOTE && resultCode == RESULT_OK){
             if (data != null){
                 // This getNotes() method is called from the onActivityResult() method of activity and we checked
                 // the current request code is for update note and the result is RESULT_OK. it means already
                 // available note is updated from CreateNote activity and its result is sent back to this activity
                 // that's why we are passing REQUEST_CODE_UPDATE_NOTE to that method.
-                getNotes(REQUEST_CODE_UPDATE_NOTE);
+
+                // Here, request code is REQUEST_CODE_UPDATE_NOTE, it means we are updating already available note from the database,
+                // and it may be possible that note gets deleted therefore as a parameter isNoteDeleted, we are passing value from
+                // CreateNoteActivity, whether the note is deleted or not using intent data with key "isNoteDeleted"
+                getNotes(REQUEST_CODE_UPDATE_NOTE, data.getBooleanExtra("isNoteDeleted", false));
             }
         }
 
