@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ToggleButton;
 
@@ -104,6 +107,27 @@ public class MainActivity extends AppCompatActivity implements NotesListeners {
         // Here, request code is REQUEST_CODE_SHOW_NOTE, it means we are displaying all notes from the database
         // and therefore as a parameter isNoteDeleted we are passing 'false'
         getNotes(REQUEST_CODE_SHOW_NOTE, false);
+
+        EditText inputSearch = findViewById(R.id.input_search);
+        inputSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                adapter.cancelTimer();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (noteList.size() != 0){
+                    adapter.searchNotes(editable.toString());
+                }
+
+            }
+        });
     }
 
 
