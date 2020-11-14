@@ -28,7 +28,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements NotesListeners {
 
     public static final int REQUEST_CODE_ADD_NOTE = 1;
-    public static final int REQUEST_CODE_UPDATE_CODE = 2;
+    public static final int REQUEST_CODE_UPDATE_NOTE = 2;
+    public static final int REQUEST_CODE_SHOW_NOTE = 3;
     private RecyclerView notesRecyclerView;
     private List<Note> noteList;
     private NoteAdapter adapter;
@@ -96,7 +97,10 @@ public class MainActivity extends AppCompatActivity implements NotesListeners {
         adapter = new NoteAdapter(noteList, this);
         notesRecyclerView.setAdapter(adapter);
 
-        getNotes();
+        // This getNotes() method is called from onCreate() method of an activity. it means
+        // the application is just started and we need to display all notes from the database
+        // and that's why we are passing REQUEST_CODE_SHOW_NOTES to that method.
+        getNotes(REQUEST_CODE_SHOW_NOTE);
     }
 
 
@@ -106,10 +110,10 @@ public class MainActivity extends AppCompatActivity implements NotesListeners {
         Intent intent = new Intent(getApplicationContext(), NewNoteActivity.class);
         intent.putExtra("isViewOrUpdate", true);
         intent.putExtra("note", note);
-        startActivityForResult(intent, REQUEST_CODE_UPDATE_CODE);
+        startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE);
     }
 
-    private void getNotes() {
+    private void getNotes(final int requestCode) {
 
         @SuppressLint("StaticFieldLeak")
         class GetNotesTask extends AsyncTask<Void, Void, List<Note>> {
@@ -122,23 +126,20 @@ public class MainActivity extends AppCompatActivity implements NotesListeners {
             @Override
             protected void onPostExecute(List<Note> notes) {
                 super.onPostExecute(notes);
-//                we checked if the note list is empty it means it
-//                the app is just started since we have declared it as a global variable,
-//                in this case , we are adding all notes from the database to this note list
-//                and notify the adapter about the new dataset. in another case,
-//                if the note list is not empty then it means notes are already loaded from
-//                the database so we are just adding only the latest note to the note list and
-//                notify adapter about new note inserted. and last we scrolled our adding only the
-//                latest note to the note list and notify adapter about nwe note inserted.
-//                and last we scrolled our recycler view to the top
-                if (noteList.size() == 0) {
+                if (requestCode == REQUEST_CODE_SHOW_NOTE){
                     noteList.addAll(notes);
                     adapter.notifyDataSetChanged();
-                } else {
-                    noteList.add(0, notes.get(0));
+                }else if (requestCode == REQUEST_CODE_ADD_NOTE){
+                    noteList.add(0,notes.get(0));
                     adapter.notifyItemInserted(0);
+                    notesRecyclerView.smoothScrollToPosition(0);
+                    // Here, request code is REQUEST_CODE_UPDATE_NOTE, so we are removing note from the clicked position
+                    // and adding the latest updated note from same position from the database and notify the adapter for item changed at the position
+                }else if (requestCode == REQUEST_CODE_UPDATE_NOTE){
+                    noteList.remove(noteClickedPosition);
+                    noteList.add(noteClickedPosition, notes.get(noteClickedPosition));
+                    adapter.notifyItemChanged(noteClickedPosition);
                 }
-                notesRecyclerView.smoothScrollToPosition(0);
             }
         }
         new GetNotesTask().execute();
@@ -147,7 +148,20 @@ public class MainActivity extends AppCompatActivity implements NotesListeners {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_ADD_NOTE && requestCode == RESULT_OK) ;
-        getNotes();
+        if (requestCode == REQUEST_CODE_ADD_NOTE && requestCode == RESULT_OK) {
+            // This getNotes() method is called from the onActivityResult() method of activity and we checked the
+            // current request code is for add note and the result is RESULT_OK. it means a new note is added from CreateNote
+            // activity and its result is sent back to this activity that's why we are passing REQUEST_CODE_ADD_NOTE to that method.
+            getNotes(REQUEST_CODE_ADD_NOTE);
+        }else if (requestCode == REQUEST_CODE_UPDATE_NOTE && resultCode == RESULT_OK){
+            if (data != null){
+                // This getNotes() method is called from the onActivityResult() method of activity and we chcked
+                // the current request code is for update note and the result is RESULT_OK. it means already
+                // available note is updated from CreateNote activity and its result is sent back to this activity
+                // that's why we are passing REQUEST_CODE_UPDATE_NOTE to that method.
+                getNotes(REQUEST_CODE_UPDATE_NOTE);
+            }
+        }
+
     }
 }

@@ -53,6 +53,7 @@ public class NewNoteActivity extends AppCompatActivity {
     private String selectImagePath;
 
     private AlertDialog dialogAddURL;
+    private Note alreadyAvailableNote;
     public static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
     public static final int REQUEST_CODE_SELECT_IMAGE = 2;
 
@@ -94,9 +95,32 @@ public class NewNoteActivity extends AppCompatActivity {
         selectNoteColor = "#333333";
         selectImagePath = "";
 
+        if (getIntent().getBooleanExtra("isViewOrUpdate", false)) {
+            alreadyAvailableNote = (Note) getIntent().getSerializableExtra("note");
+            setViewOrUpdateNote();
+        }
+
         initNoteBackground();
         setSubtitleIndicatorColor();
 
+    }
+
+    private void setViewOrUpdateNote() {
+        inputNoteTitle.setText(alreadyAvailableNote.getTitle());
+        inputNoteSubtitle.setText(alreadyAvailableNote.getSubtitle());
+        inputNoteText.setText(alreadyAvailableNote.getNoteText());
+        textDataTime.setText(alreadyAvailableNote.getDataTime());
+
+        if (alreadyAvailableNote.getImagePath() != null && !alreadyAvailableNote.getImagePath().trim().isEmpty()) {
+            imageNote.setImageBitmap(BitmapFactory.decodeFile(alreadyAvailableNote.getImagePath()));
+            imageNote.setVisibility(View.VISIBLE);
+            selectImagePath = alreadyAvailableNote.getImagePath();
+        }
+
+        if (alreadyAvailableNote.getWebLink() != null && !alreadyAvailableNote.getWebLink().trim().isEmpty()) {
+            textWebURL.setText(alreadyAvailableNote.getWebLink());
+            layoutWebURL.setVisibility(View.VISIBLE);
+        }
     }
 
     private void saveNote() {
@@ -122,6 +146,17 @@ public class NewNoteActivity extends AppCompatActivity {
         // visible only while adding Web URL from add URL dialog.
         if (layoutWebURL.getVisibility() == View.VISIBLE) {
             note.setWebLink(textWebURL.getText().toString());
+        }
+
+
+        /**
+         * Here, we are setting id of new note from an already available note.
+         * Since we have set onConflictStrategy to "REPLACE" in NoteDao.
+         * This means if id of new note id already available in the database
+         * then it will be replaced with new note and our note get updated.
+         * */
+        if (alreadyAvailableNote != null) {
+            note.setId(alreadyAvailableNote.getId());
         }
 
         @SuppressLint("StaticFieldLeak")
@@ -270,6 +305,29 @@ public class NewNoteActivity extends AppCompatActivity {
                 setSubtitleIndicatorColor();
             }
         });
+
+        if (alreadyAvailableNote != null && alreadyAvailableNote.getColor() != null && !alreadyAvailableNote.getColor().trim().isEmpty()) {
+            switch (alreadyAvailableNote.getColor()) {
+                case "#FF6F00":
+                    layoutColor.findViewById(R.id.view_color2).performClick();
+                    break;
+                case "#F50057":
+                    layoutColor.findViewById(R.id.view_color3).performClick();
+                    break;
+                case "#3A52FC":
+                    layoutColor.findViewById(R.id.view_color4).performClick();
+                    break;
+                case "#827717":
+                    layoutColor.findViewById(R.id.view_color5).performClick();
+                    break;
+                case "#00695C":
+                    layoutColor.findViewById(R.id.view_color6).performClick();
+                    break;
+                case "#000000":
+                    layoutColor.findViewById(R.id.view_color7).performClick();
+                    break;
+            }
+        }
 
         layoutColor.findViewById(R.id.layout_add_image).setOnClickListener(new View.OnClickListener() {
             @Override
