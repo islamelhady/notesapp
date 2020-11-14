@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -15,25 +13,27 @@ import android.widget.ToggleButton;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.elhady.notes.adapter.NoteAdapter;
 import com.example.elhady.notes.database.NoteDatabase;
+import com.example.elhady.notes.listeners.NotesListeners;
 import com.example.elhady.notes.models.Note;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NotesListeners {
 
-    public static final int ADD_NOTE_REQUEST_CODE = 1;
+    public static final int REQUEST_CODE_ADD_NOTE = 1;
+    public static final int REQUEST_CODE_UPDATE_CODE = 2;
     private RecyclerView notesRecyclerView;
     private List<Note> noteList;
     private NoteAdapter adapter;
+
+    private int noteClickedPosition = -1;
 
     private ToggleButton switchCompat;
     private SharedPreferences sharedPreferences = null;
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         imageViewAddNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(getApplicationContext(), NewNoteActivity.class), ADD_NOTE_REQUEST_CODE);
+                startActivityForResult(new Intent(getApplicationContext(), NewNoteActivity.class), REQUEST_CODE_ADD_NOTE);
             }
         });
 
@@ -93,10 +93,20 @@ public class MainActivity extends AppCompatActivity {
         notesRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
         noteList = new ArrayList<>();
-        adapter = new NoteAdapter(noteList);
+        adapter = new NoteAdapter(noteList, this);
         notesRecyclerView.setAdapter(adapter);
 
         getNotes();
+    }
+
+
+    @Override
+    public void onNoteClicked(Note note, int position) {
+        noteClickedPosition = position;
+        Intent intent = new Intent(getApplicationContext(), NewNoteActivity.class);
+        intent.putExtra("isViewOrUpdate", true);
+        intent.putExtra("note", note);
+        startActivityForResult(intent, REQUEST_CODE_UPDATE_CODE);
     }
 
     private void getNotes() {
@@ -137,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ADD_NOTE_REQUEST_CODE && requestCode == RESULT_OK) ;
+        if (requestCode == REQUEST_CODE_ADD_NOTE && requestCode == RESULT_OK) ;
         getNotes();
     }
 }
