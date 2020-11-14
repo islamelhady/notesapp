@@ -126,11 +126,13 @@ public class MainActivity extends AppCompatActivity implements NotesListeners {
             @Override
             protected void onPostExecute(List<Note> notes) {
                 super.onPostExecute(notes);
+                // Here, request code is REQUEST_CODE_SHOW_NOTE, so we are adding all notes from database to
+                // noteList and notify adapter about the new data set.
                 if (requestCode == REQUEST_CODE_SHOW_NOTE){
                     noteList.addAll(notes);
                     adapter.notifyDataSetChanged();
                 }else if (requestCode == REQUEST_CODE_ADD_NOTE){
-                    noteList.add(0,notes.get(0));
+                    noteList.add(0, notes.get(0));
                     adapter.notifyItemInserted(0);
                     notesRecyclerView.smoothScrollToPosition(0);
                     // Here, request code is REQUEST_CODE_UPDATE_NOTE, so we are removing note from the clicked position
@@ -155,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements NotesListeners {
             getNotes(REQUEST_CODE_ADD_NOTE);
         }else if (requestCode == REQUEST_CODE_UPDATE_NOTE && resultCode == RESULT_OK){
             if (data != null){
-                // This getNotes() method is called from the onActivityResult() method of activity and we chcked
+                // This getNotes() method is called from the onActivityResult() method of activity and we checked
                 // the current request code is for update note and the result is RESULT_OK. it means already
                 // available note is updated from CreateNote activity and its result is sent back to this activity
                 // that's why we are passing REQUEST_CODE_UPDATE_NOTE to that method.
