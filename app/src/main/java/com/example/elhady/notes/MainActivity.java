@@ -1,21 +1,35 @@
 package com.example.elhady.notes;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -33,11 +47,15 @@ public class MainActivity extends AppCompatActivity implements NotesListeners {
     public static final int REQUEST_CODE_ADD_NOTE = 1;
     public static final int REQUEST_CODE_UPDATE_NOTE = 2;
     public static final int REQUEST_CODE_SHOW_NOTE = 3;
+    public static final int REQUEST_CODE_SELECT_IMAGE = 4;
+    public static final int REQUEST_CODE_STORAGE_PERMISSION = 5;
     private RecyclerView notesRecyclerView;
     private List<Note> noteList;
     private NoteAdapter adapter;
 
     private int noteClickedPosition = -1;
+
+    private AlertDialog dialogAddURL;
 
     private ToggleButton switchCompat;
     private SharedPreferences sharedPreferences = null;
@@ -50,13 +68,13 @@ public class MainActivity extends AppCompatActivity implements NotesListeners {
 
         switchCompat = findViewById(R.id.switchCompat);
 
-        sharedPreferences = getSharedPreferences("night",0);
-        Boolean booleanValue = sharedPreferences.getBoolean("night_mode",true);
-        if (booleanValue){
+        sharedPreferences = getSharedPreferences("night", 0);
+        Boolean booleanValue = sharedPreferences.getBoolean("night_mode", true);
+        if (booleanValue) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             switchCompat.setChecked(true);
 //            imageView.setImageResource(R.drawable.night);
-        }else {
+        } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             switchCompat.setChecked(false);
         }
@@ -65,19 +83,19 @@ public class MainActivity extends AppCompatActivity implements NotesListeners {
         switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     switchCompat.setChecked(true);
 //                    imageView.setImageResource(R.drawable.night);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("night_mode",true);
+                    editor.putBoolean("night_mode", true);
                     editor.commit();
-                }else {
+                } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     switchCompat.setChecked(false);
 //                    imageView.setImageResource(R.drawable.night);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("night_mode",false);
+                    editor.putBoolean("night_mode", false);
                     editor.commit();
 
                 }
@@ -122,14 +140,74 @@ public class MainActivity extends AppCompatActivity implements NotesListeners {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (noteList.size() != 0){
+                if (noteList.size() != 0) {
                     adapter.searchNotes(editable.toString());
                 }
 
             }
         });
+
+        findViewById(R.id.image_add_note).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(getApplicationContext(), NewNoteActivity.class), REQUEST_CODE_ADD_NOTE);
+            }
+        });
+
+        findViewById(R.id.image_add_image).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ContextCompat.checkSelfPermission(
+                        getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(MainActivity.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PERMISSION);
+                } else {
+                    selectImage();
+                }
+            }
+        });
+
+        findViewById(R.id.image_add_web_link).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAddURLDialog();
+            }
+        });
     }
 
+    private void selectImage() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION && grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                selectImage();
+            } else {
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private String getPathFromUri(Uri contentUri) {
+        String filePath;
+        Cursor cursor = getContentResolver()
+                .query(contentUri, null, null, null, null);
+        if (cursor == null) {
+            filePath = contentUri.getPath();
+        } else {
+            cursor.moveToFirst();
+            int index = cursor.getColumnIndex("_data");
+            filePath = cursor.getString(index);
+            cursor.close();
+        }
+        return filePath;
+    }
 
     @Override
     public void onNoteClicked(Note note, int position) {
@@ -155,10 +233,10 @@ public class MainActivity extends AppCompatActivity implements NotesListeners {
                 super.onPostExecute(notes);
                 // Here, request code is REQUEST_CODE_SHOW_NOTE, so we are adding all notes from database to
                 // noteList and notify adapter about the new data set.
-                if (requestCode == REQUEST_CODE_SHOW_NOTE){
+                if (requestCode == REQUEST_CODE_SHOW_NOTE) {
                     noteList.addAll(notes);
                     adapter.notifyDataSetChanged();
-                }else if (requestCode == REQUEST_CODE_ADD_NOTE){
+                } else if (requestCode == REQUEST_CODE_ADD_NOTE) {
                     noteList.add(0, notes.get(0));
                     adapter.notifyItemInserted(0);
                     notesRecyclerView.smoothScrollToPosition(0);
@@ -171,11 +249,11 @@ public class MainActivity extends AppCompatActivity implements NotesListeners {
                     // if the note is deleted then notifying adapter about item removed.
                     // if the note is not deleted then it must be updated that's why we are adding a newly updated
                     // note to that same position where we removed and notifying adapter about item changed.
-                }else if (requestCode == REQUEST_CODE_UPDATE_NOTE){
+                } else if (requestCode == REQUEST_CODE_UPDATE_NOTE) {
                     noteList.remove(noteClickedPosition);
-                    if (isNoteDeleted){
+                    if (isNoteDeleted) {
                         adapter.notifyItemRemoved(noteClickedPosition);
-                    }else {
+                    } else {
                         noteList.add(noteClickedPosition, notes.get(noteClickedPosition));
                         adapter.notifyItemChanged(noteClickedPosition);
                     }
@@ -196,8 +274,8 @@ public class MainActivity extends AppCompatActivity implements NotesListeners {
             // Here, request code is REQUEST_CODE_ADD_NOTE, it means we have added a new note to the database
             // and therefore as a parameter isNoteDeleted we are passing 'false'
             getNotes(REQUEST_CODE_ADD_NOTE, false);
-        }else if (requestCode == REQUEST_CODE_UPDATE_NOTE && resultCode == RESULT_OK){
-            if (data != null){
+        } else if (requestCode == REQUEST_CODE_UPDATE_NOTE && resultCode == RESULT_OK) {
+            if (data != null) {
                 // This getNotes() method is called from the onActivityResult() method of activity and we checked
                 // the current request code is for update note and the result is RESULT_OK. it means already
                 // available note is updated from CreateNote activity and its result is sent back to this activity
@@ -208,7 +286,68 @@ public class MainActivity extends AppCompatActivity implements NotesListeners {
                 // CreateNoteActivity, whether the note is deleted or not using intent data with key "isNoteDeleted"
                 getNotes(REQUEST_CODE_UPDATE_NOTE, data.getBooleanExtra("isNoteDeleted", false));
             }
-        }
+        } else if (requestCode == REQUEST_CODE_SELECT_IMAGE && resultCode == RESULT_OK) {
+            if (data != null) {
+                Uri selectedImageUri = data.getData();
+                if (selectedImageUri != null) {
+                    try {
+                        String selectedImagePath = getPathFromUri(selectedImageUri);
+                        Intent intent = new Intent(getApplicationContext(), NewNoteActivity.class);
+                        intent.putExtra("isFromQuickAction", true);
+                        intent.putExtra("quickActionType", "image");
+                        intent.putExtra("imagePath", selectedImagePath);
+                        startActivityForResult(intent, REQUEST_CODE_ADD_NOTE);
 
+                    } catch (Exception e) {
+                        Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
+    }
+
+    private void showAddURLDialog() {
+        if (dialogAddURL == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            View view = LayoutInflater.from(this).inflate(
+                    R.layout.layout_add_url,
+                    (ViewGroup) findViewById(R.id.layout_add_url_container));
+
+            builder.setView(view);
+
+            dialogAddURL = builder.create();
+            if (dialogAddURL.getWindow() != null) {
+                dialogAddURL.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            }
+
+            final EditText inputURL = view.findViewById(R.id.input_URL);
+            inputURL.requestFocus();
+
+            view.findViewById(R.id.text_add).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (inputURL.getText().toString().trim().isEmpty()) {
+                        Toast.makeText(MainActivity.this, "Enter URL", Toast.LENGTH_SHORT).show();
+                    } else if (!Patterns.WEB_URL.matcher(inputURL.getText().toString()).matches()) {
+                        Toast.makeText(MainActivity.this, "Enter valid URL", Toast.LENGTH_SHORT).show();
+                    } else {
+                        dialogAddURL.dismiss();
+                        Intent intent = new Intent(getApplicationContext(), NewNoteActivity.class);
+                        intent.putExtra("isFromQuickAction", true);
+                        intent.putExtra("quickActionType", "URL");
+                        intent.putExtra("URL", inputURL.getText().toString());
+                        startActivityForResult(intent, REQUEST_CODE_ADD_NOTE);
+                    }
+                }
+            });
+
+            view.findViewById(R.id.text_cancel).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialogAddURL.dismiss();
+                }
+            });
+        }
+        dialogAddURL.show();
     }
 }
