@@ -5,3 +5,7 @@ Simple Notes app using Room Database
 * Room
 * LiveData
 * ViewModel
+
+### ScreenShot
+
+![](screenshot.jpg)
